@@ -33,7 +33,7 @@ const App = () => {
         desiredSampRate: 16000,
         recorderType: StereoAudioRecorder,
         numberOfAudioChannels: 1,
-        timeSlice: 2500,
+        timeSlice: 3000,
         ondataavailable: async (blob) => {
           console.log("data ", blob);
           const stream = ss.createStream();
@@ -81,17 +81,23 @@ const App = () => {
     chunk && init.sendChunks(chunk);
   };
   React.useEffect(() => {
-    setContent(init.file);
+    console.log("❤️❤️❤️❤️❤️❤️❤️", init.file);
+    setContent((prev) => prev + init.file);
   }, [init.file]);
+
   React.useEffect(() => {
     handleChunks(record);
   }, [record]);
   React.useEffect(() => {
     console.log(`🔥🔥🔥🔥🔥🔥🔥🔥🔥 ${content}`);
   }, [content]);
+  React.useEffect(() => {
+    if (init?.error) stopHandler();
+  }, [init?.error]);
   return (
     <div>
       <div>
+        {this?.error && this.error}
         <button disabled={recording} onClick={startHandler}>
           start
         </button>
